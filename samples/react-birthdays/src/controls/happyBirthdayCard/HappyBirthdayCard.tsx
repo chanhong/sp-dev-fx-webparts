@@ -2,85 +2,50 @@ import * as React from 'react';
 import styles from './HappyBirthdayCard.module.scss';
 import { IHappyBirthdayCardProps } from './IHappyBirthdayCardProps';
 import { IHappyBirthdayCardPState } from './IHappyBirthdayCardState';
-import { escape } from '@microsoft/sp-lodash-subset';
-import { IPersonaSharedProps, Persona, PersonaSize, IPersonaProps, PersonaPresence } from 'office-ui-fabric-react/lib/Persona';
-import { Image, IImageProps, ImageFit } from 'office-ui-fabric-react/lib/Image';
+import { IPersonaSharedProps, Persona, PersonaSize, IPersonaProps } from 'office-ui-fabric-react/lib/Persona';
+import { Image, ImageFit } from 'office-ui-fabric-react/lib/Image';
 import { Label } from 'office-ui-fabric-react/lib/Label';
 import * as strings from 'ControlStrings';
 import { Icon } from 'office-ui-fabric-react/lib/Icon';
 import * as moment from 'moment';
+
 import {
   DocumentCardActions,
 } from 'office-ui-fabric-react/lib/DocumentCard';
-const img: string = require('../../../assets/cof11.png');
 
 const IMG_WIDTH: number = 200;
 const IMG_HEIGTH: number = 190;
 
-const imageTemplate: { imageUrl: string }[] = [{
-  imageUrl: require('.../../../assets/cof.png')
-},
-{
-  imageUrl: require('.../../../assets/cof5.png')
-},
-{
-  imageUrl: require('.../../../assets/cof1.png')
-},
-{
-  imageUrl: require('.../../../assets/cof3.png')
-},
-{
-  imageUrl: require('.../../../assets/cof8.png')
-},
-{
-  imageUrl: require('.../../../assets/baloons.png')
-},
-{
-  imageUrl: require('.../../../assets/cof2.png')
-},
-{
-  imageUrl: require('.../../../assets/cof10.png')
-},
-{
-  imageUrl: require('.../../../assets/cof11.png')
-},
-{
-  imageUrl: require('.../../../assets/cof12.png')
-},
-{
-  imageUrl: require('.../../../assets/cof14.png')
-},
-{
-  imageUrl: require('.../../../assets/cof14_1.png')
-},
-{
-  imageUrl: require('.../../../assets/cof18.png')
-},
-{
-  imageUrl: require('.../../../assets/cof17.png')
-},
-{
-  imageUrl: require('.../../../assets/cof19.png')
-},
-{
-  imageUrl: require('.../../../assets/cof20.png')
-},
-{
-  imageUrl: require('.../../../assets/cof22.png')
-},
-{
-  imageUrl: require('.../../../assets/cof24.png')
-},
-{
-  imageUrl: require('.../../../assets/cof28.png')
-},
-{
-  imageUrl: require('.../../../assets/cof29.png')
-},
-{
-  imageUrl: require('.../../../assets/cof30.png')
+interface IImageTemplate {
+  [key: string]: {
+    imageUrl: string
+  }
 }
+
+const imageTemplate: IImageTemplate[] = [
+  { imageUrl: require('../../assets/cof.png') },
+  { imageUrl: require('../../assets/cof5.png') },
+  { imageUrl: require('../../assets/cof1.png') },
+  { imageUrl: require('../../assets/cof3.png') },
+  { imageUrl: require('../../assets/cof8.png') },
+  { imageUrl: require('../../assets/baloons.png') },
+  { imageUrl: require('../../assets/cof2.png') },
+  { imageUrl: require('../../assets/cof10.png') },
+  { imageUrl: require('../../assets/cof11.png') },
+  { imageUrl: require('../../assets/cof12.png') },
+  { imageUrl: require('../../assets/cof14.png') },
+  { imageUrl: require('../../assets/cof14_1.png') },
+  { imageUrl: require('../../assets/cof18.png') },
+  { imageUrl: require('../../assets/cof17.png') },
+  { imageUrl: require('../../assets/cof19.png') },
+  { imageUrl: require('../../assets/cof20.png') },
+  { imageUrl: require('../../assets/cof22.png') },
+  { imageUrl: require('../../assets/cof24.png') },
+  { imageUrl: require('../../assets/cof28.png') },
+  { imageUrl: require('../../assets/cof29.png') },
+  { imageUrl: require('../../assets/cof30.png') }
 ];
+
 
 
 export class HappyBirthdayCard extends React.Component<IHappyBirthdayCardProps, IHappyBirthdayCardPState> {
@@ -109,16 +74,16 @@ export class HappyBirthdayCard extends React.Component<IHappyBirthdayCardProps, 
   }
   // Render
   public render(): React.ReactElement<IHappyBirthdayCardProps> {
-    
+
     this._birthdayMsg = this.state.isBirthdayToday ? (this.props.anniversary? strings.HappyAnniversaryMsg: strings.HappyBirthdayMsg) : (this.props.anniversary? strings.NextAnniversaryMsg: strings.NextBirthdayMsg);
     return (
-      <div className={styles.happyBirdthay}>
+      <div className={styles.happyBirthday}>
         <div className={styles.documentCardWrapper}>
           <div className={styles.documentCard}>
             <Image
-
               imageFit={ImageFit.cover}
-              src={imageTemplate[this.props.imageTemplate].imageUrl}
+              // @ts-expect-error: Object is possibly 'null'.
+              src={imageTemplate[this.props.imageTemplate]?.imageUrl}
               width={IMG_WIDTH}
               height={IMG_HEIGTH}
             />
@@ -143,6 +108,7 @@ export class HappyBirthdayCard extends React.Component<IHappyBirthdayCardProps, 
                 actions={[
                   {
                     iconProps: { iconName: 'Mail' },
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
                     onClick: (ev: any) => {
                       ev.preventDefault();
                       ev.stopPropagation();
@@ -178,7 +144,10 @@ export class HappyBirthdayCard extends React.Component<IHappyBirthdayCardProps, 
     return _retvalue;
   }
   // Get Initials
-  private _getInitial(userName: string): string {
+  private _getInitial(userName: string | undefined): string {
+    if (!userName) {
+      return '';
+    }
     const _arr = userName.split(' ');
     const _initial = _arr[0].charAt(0).toUpperCase() + (_arr[1] ? _arr[1].charAt(0).toLocaleUpperCase() : "");
     return _initial;

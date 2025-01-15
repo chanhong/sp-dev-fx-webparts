@@ -4,7 +4,7 @@ import { sp } from '@pnp/sp/presets/all';
 export class SPService {
     constructor(private context: WebPartContext) {
         sp.setup({
-            spfxContext: this.context
+            spfxContext: this.context as any
         });
     }
 
@@ -25,7 +25,7 @@ export class SPService {
                         expandQuery.push(selectedFields[i].key);
                         break;
                     case 'SP.Field':
-                        selectQuery.push('Attachments,AttachmentFiles');
+                        selectQuery.push('AttachmentFiles');
                         expandQuery.push('AttachmentFiles');
                         break;
                     default:
@@ -54,7 +54,7 @@ export class SPService {
             const allFields: any[] = await sp.web.lists
                 .getById(selectedList)
                 .fields
-                .filter("Hidden eq false and ReadOnlyField eq false and Title ne 'Content Type' and Title ne 'Attachments'")
+                .filter("Hidden eq false and ReadOnlyField eq false and Title ne 'Content Type'")
                 .get();
             return allFields;
         }

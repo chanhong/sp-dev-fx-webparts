@@ -2,14 +2,14 @@
 
 ## Summary
 
-[Web parts](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/overview-client-side-web-parts) is a special kind of SharePoint controls that can be supported by the [Bot Framework](https://dev.botframework.com). This sample will show you how to embed a Bot Framework bot into a SharePoint web site with SSO.
+[Web parts](https://learn.microsoft.com/sharepoint/dev/spfx/web-parts/overview-client-side-web-parts) is a special kind of SharePoint controls that can be supported by the [Bot Framework](https://dev.botframework.com). This sample will show you how to embed a Bot Framework bot into a SharePoint web site with SSO.
 
 There are two parts included in this sample:
 
 1. A login bot sample
 1. A web parts sample
 
-The web parts embeds the login bot by using a webchat. As the user has already login in the SharePoint website, we could use [SSO](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-authentication-sso?view=azure-bot-service-4.0&tabs=csharp%2Ceml) to authorize the bot. This sample shows how to do this including:
+The web parts embeds the login bot by using a webchat. As the user has already login in the SharePoint website, we could use [SSO](https://learn.microsoft.com/azure/bot-service/bot-builder-authentication-sso?view=azure-bot-service-4.0&tabs=csharp%2Ceml) to authorize the bot. This sample shows how to do this including:
 
 - Detect and intercept OAuth process.
 - Use SharePoint library to get the exchange token and send it back to the bot.
@@ -21,6 +21,11 @@ This demo does not include any threat models and is designed for educational pur
 
 ## Compatibility
 
+| :warning: Important          |
+|:---------------------------|
+| Every SPFx version is only compatible with specific version(s) of Node.js. In order to be able to build this sample, please ensure that the version of Node on your workstation matches one of the versions listed in this section. This sample will not work on a different version of Node.|
+|Refer to <https://aka.ms/spfx-matrix> for more information on SPFx compatibility.   |
+
 ![SPFx 1.10.0](https://img.shields.io/badge/SPFx-1.10.0-green.svg)
 ![Node.js v10](https://img.shields.io/badge/Node.js-v10-green.svg) 
 ![Compatible with SharePoint Online](https://img.shields.io/badge/SharePoint%20Online-Compatible-green.svg)
@@ -31,8 +36,8 @@ This demo does not include any threat models and is designed for educational pur
 
 ## Applies to
 
-* [SharePoint Framework](https://docs.microsoft.com/sharepoint/dev/spfx/sharepoint-framework-overview)
-* [Office 365 tenant](https://docs.microsoft.com/sharepoint/dev/spfx/set-up-your-development-environment)
+* [SharePoint Framework](https://learn.microsoft.com/sharepoint/dev/spfx/sharepoint-framework-overview)
+* [Microsoft 365 tenant](https://learn.microsoft.com/sharepoint/dev/spfx/set-up-your-development-environment)
 * [Microsoft Bot Framework](http://dev.botframework.com)
 
 ## Prerequisites
@@ -51,12 +56,9 @@ This demo does not include any threat models and is designed for educational pur
     python --version
     ```
 
-## Solution
+## Contributors
 
-Solution|Author(s)
---------|---------
-web part | Bot Framework Discussions (msbots@service.microsoft.com) <br/> [Stephan Bisser](https://github.com/stephanbisser) (@stephanbisser, bisser.io)
-bot | Bot Framework Discussions (msbots@service.microsoft.com)
+* [Stephan Bisser](https://github.com/stephanbisser)
 
 ## Version history
 
@@ -97,7 +99,7 @@ Version|Date|Comments
 
 - Register connections. You can get it done by [deploy your bot to Azure](https://aka.ms/azuredeployment). Save your bot service endpoint like: "https://YOUR_BOT.azurewebsites.net". Save your AAD Id as `YOUR_APP_ID`, AAD Name as `YOUR_APP_Name` and secret as `YOUR_APP_PSW` also.
 
-- [Connect to direct line](https://docs.microsoft.com/en-us/azure/bot-service/bot-service-channel-connect-directline?view=azure-bot-service-4.0), copy one of the Secret Key values as YOUR_DIRECT_LINE_SECRET and store this for later. This is your ‘Direct Line Secret’.
+- [Connect to direct line](https://learn.microsoft.com/azure/bot-service/bot-service-channel-connect-directline?view=azure-bot-service-4.0), copy one of the Secret Key values as YOUR_DIRECT_LINE_SECRET and store this for later. This is your ‘Direct Line Secret’.
 
 - Add `DirectLineSecret` to an `.env` config file under `./bot`
 
@@ -109,7 +111,7 @@ Version|Date|Comments
 
 ### Setup OAuth via Azure Active Directory for the Bot
 
-[Check here](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-authentication?view=azure-bot-service-4.0&tabs=csharp) for more information about getting an AADv2
+[Check here](https://learn.microsoft.com/azure/bot-service/bot-builder-authentication?view=azure-bot-service-4.0&tabs=csharp) for more information about getting an AADv2
 application setup for use in Azure Bot Service.
 
 - Go to your [Azure Active Directory](https://ms.portal.azure.com/#blade/Microsoft_AAD_IAM/ActiveDirectoryMenuBlade/Overview)
@@ -142,7 +144,7 @@ application setup for use in Azure Bot Service.
 
 ### Setup Authentication via Azure Bot Services for the Bot
 
-Check the [Add authentication to your bot via Azure Bot Service](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-tutorial-authentication?view=azure-bot-service-3.0&tabs=aadv1) article for more information about adding authentication to your bot.
+Check the [Add authentication to your bot via Azure Bot Service](https://learn.microsoft.com/azure/bot-service/bot-builder-tutorial-authentication?view=azure-bot-service-3.0&tabs=aadv1) article for more information about adding authentication to your bot.
 
 - Add OAuth Connection for the bot to the Bot Channel Registration
     - In the Bot Channel Registration open the settings blade
@@ -195,9 +197,9 @@ Check the [Add authentication to your bot via Azure Bot Service](https://docs.mi
     npm install
     ```
 
-- [Publish and host webpart](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/get-started/hosting-webpart-from-office-365-cdn), prepare for approving permissions
+- [Publish and host webpart](https://learn.microsoft.com/sharepoint/dev/spfx/web-parts/get-started/hosting-webpart-from-office-365-cdn), prepare for approving permissions
 
-- Refer [Connect to Azure AD-secured APIs](https://docs.microsoft.com/en-us/sharepoint/api-access) to publish and approve permissions from admin site
+- Refer [Connect to Azure AD-secured APIs](https://learn.microsoft.com/sharepoint/api-access) to publish and approve permissions from admin site
     - Please ensure your service principal had been enabled for your AAD account.
         - Check "Managed application in local directory" in your AAD overview blade in Azure Portal
     - Go to SharePoint admin center
@@ -301,7 +303,7 @@ const toastMiddleware = () => next => ({ notification, ...otherArgs }) => {
 };
 ```
 
-In the toast, [`aadTokenProvider`](https://docs.microsoft.com/en-us/javascript/api/sp-http/aadtokenprovider?view=sp-typescript-latest) is used to get the required token for exchange. If succeed, send an invoke activity back for authentication:
+In the toast, [`aadTokenProvider`](https://learn.microsoft.com/javascript/api/sp-http/aadtokenprovider?view=sp-typescript-latest) is used to get the required token for exchange. If succeed, send an invoke activity back for authentication:
 
 ```ts
 context.aadTokenProviderFactory.getTokenProvider().then((tokenProvider: AadTokenProvider) => {
@@ -340,13 +342,13 @@ Note: due to a [SDK bug](https://github.com/microsoft/botbuilder-js/issues/3006)
 
 ## Further reading
 
-- [SharePoint Web Parts Development Basics](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/web-parts/overview-client-side-web-parts)
+- [SharePoint Web Parts Development Basics](https://learn.microsoft.com/sharepoint/dev/spfx/web-parts/overview-client-side-web-parts)
 - [Bot Framework Documentation](https://docs.botframework.com)
 - [Bot Basics](https://docs.microsoft.com/azure/bot-service/bot-builder-basics?view=azure-bot-service-4.0)
 - [Azure Bot Service Introduction](https://docs.microsoft.com/azure/bot-service/bot-service-overview-introduction?view=azure-bot-service-4.0)
 - [Azure Bot Service Documentation](https://docs.microsoft.com/azure/bot-service/?view=azure-bot-service-4.0)
-- [Add authentication to your bot](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-tutorial-authentication?view=azure-bot-service-3.0&tabs=aadv1)
-- [Add single sign on to a bot](https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-authentication-sso?view=azure-bot-service-4.0&tabs=csharp%2Ceml)
+- [Add authentication to your bot](https://learn.microsoft.com/azure/bot-service/bot-builder-tutorial-authentication?view=azure-bot-service-3.0&tabs=aadv1)
+- [Add single sign on to a bot](https://learn.microsoft.com/azure/bot-service/bot-builder-authentication-sso?view=azure-bot-service-4.0&tabs=csharp%2Ceml)
 - [Web Chat with SSO using MSAL](https://github.com/microsoft/BotFramework-WebChat/tree/master/samples/07.advanced-web-chat-apps/e.sso-on-behalf-of-authentication)
 
 
@@ -354,19 +356,19 @@ Note: due to a [SDK bug](https://github.com/microsoft/botbuilder-js/issues/3006)
 
 We do not support samples, but we this community is always willing to help, and we want to improve these samples. We use GitHub to track issues, which makes it easy for  community members to volunteer their time and help resolve issues.
 
-You can try looking at [issues related to this sample](https://github.com/pnp/sp-dev-fx-webparts/issues?q=label%3Areact-bot-framework-sso) to see if anybody else is having the same issues.
+You can try looking at [issues related to this sample](https://github.com/pnp/sp-dev-fx-webparts/issues?q=label%3A%22sample%3A%20react-bot-framework-sso") to see if anybody else is having the same issues.
 
-You can also try looking at [discussions related to this sample](https://github.com/pnp/sp-dev-fx-webparts/discussions?discussions_q=label%3Areact-bot-framework-sso) and see what the community is saying.
+You can also try looking at [discussions related to this sample](https://github.com/pnp/sp-dev-fx-webparts/discussions?discussions_q=react-bot-framework-sso) and see what the community is saying.
 
-If you encounter any issues while using this sample, [create a new issue](https://github.com/pnp/sp-dev-fx-webparts/issues/new?assignees=&labels=Needs%3A+Triage+%3Amag%3A%2Ctype%3Abug-suspected&template=bug-report.yml&sample=react-bot-framework-sso&authors=@stephanbisser&title=react-bot-framework-sso%20-%20).
+If you encounter any issues while using this sample, [create a new issue](https://github.com/pnp/sp-dev-fx-webparts/issues/new?assignees=&labels=Needs%3A+Triage+%3Amag%3A%2Ctype%3Abug-suspected%2Csample%3A%20react-bot-framework-sso&template=bug-report.yml&sample=react-bot-framework-sso&authors=@stephanbisser&title=react-bot-framework-sso%20-%20).
 
-For questions regarding this sample, [create a new question](https://github.com/pnp/sp-dev-fx-webparts/issues/new?assignees=&labels=Needs%3A+Triage+%3Amag%3A%2Ctype%3Abug-suspected&template=question.yml&sample=react-bot-framework-sso&authors=@stephanbisser&title=react-bot-framework-sso%20-%20).
+For questions regarding this sample, [create a new question](https://github.com/pnp/sp-dev-fx-webparts/issues/new?assignees=&labels=Needs%3A+Triage+%3Amag%3A%2Ctype%3Aquestion%2Csample%3A%20react-bot-framework-sso&template=question.yml&sample=react-bot-framework-sso&authors=@stephanbisser&title=react-bot-framework-sso%20-%20).
 
-Finally, if you have an idea for improvement, [make a suggestion](https://github.com/pnp/sp-dev-fx-webparts/issues/new?assignees=&labels=Needs%3A+Triage+%3Amag%3A%2Ctype%3Abug-suspected&template=suggestion.yml&sample=react-bot-framework-sso&authors=@stephanbisser&title=react-bot-framework-sso%20-%20).
+Finally, if you have an idea for improvement, [make a suggestion](https://github.com/pnp/sp-dev-fx-webparts/issues/new?assignees=&labels=Needs%3A+Triage+%3Amag%3A%2Ctype%3Aenhancement%2Csample%3A%20react-bot-framework-sso&template=question.yml&sample=react-bot-framework-sso&authors=@stephanbisser&title=react-bot-framework-sso%20-%20).
 
 ## Disclaimer
 
 **THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
 
 
-<img src="https://telemetry.sharepointpnp.com/sp-dev-fx-webparts/samples/react-bot-framework-sso" />
+<img src="https://m365-visitor-stats.azurewebsites.net/sp-dev-fx-webparts/samples/react-bot-framework-sso" />

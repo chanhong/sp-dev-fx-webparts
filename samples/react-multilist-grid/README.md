@@ -16,7 +16,7 @@ These are SharePoint field types for the most part(not all field types have been
 
 The columns will be displayed in the grid in the order they appear on the Column Definition panel. You can use the up and down arrow icons on each row to rearrange the columns. The delete icon on each row can be used to delete a column from the grid.
 
-After defining all the columns to be displayed in your grid, click the save icon in the command bar and you will be returned to the configuration panel for the webpart.
+After defining all the columns to be displayed in your grid, click the save icon in the command bar and you will be returned to the configuration panel for the web part.
 
 Clicking the Update Lists button on the configuration panel will open the List Definitions panel:
 ![ListDefinitions panel](./src/images/ListDefinitions.PNG)
@@ -67,6 +67,11 @@ Use the Undo icon to undo the changes made to an item.
 
 ## Compatibility
 
+| :warning: Important          |
+|:---------------------------|
+| Every SPFx version is only compatible with specific version(s) of Node.js. In order to be able to build this sample, please ensure that the version of Node on your workstation matches one of the versions listed in this section. This sample will not work on a different version of Node.|
+|Refer to <https://aka.ms/spfx-matrix> for more information on SPFx compatibility.   |
+
 ![SPFx 0.7.0](https://img.shields.io/badge/SPFx-0.7.0-orange.svg)
 ![Node.js v6](https://img.shields.io/badge/Node.js-v6-green.svg) 
 ![Compatible with SharePoint Online](https://img.shields.io/badge/SharePoint%20Online-Compatible-green.svg)
@@ -74,12 +79,13 @@ Use the Undo icon to undo the changes made to an item.
 ![Compatible with SharePoint 2016 (Feature Pack 2)](https://img.shields.io/badge/SharePoint%20Server%202016%20(Feature%20Pack%202)-Compatible-green.svg)
 ![Local Workbench Compatible](https://img.shields.io/badge/Local%20Workbench-Compatible-green.svg)
 ![Hosted Workbench Compatible](https://img.shields.io/badge/Hosted%20Workbench-Compatible-green.svg)
+![Compatible with Remote Containers](https://img.shields.io/badge/Remote%20Containers-Compatible-green.svg)
 
 
 ## Applies to
 
-* [SharePoint Framework Developer Preview](https://docs.microsoft.com/sharepoint/dev/spfx/sharepoint-framework-overview)
-* [Office 365 developer tenant](https://docs.microsoft.com/sharepoint/dev/spfx/set-up-your-developer-tenant)
+* [SharePoint Framework Developer Preview](https://learn.microsoft.com/sharepoint/dev/spfx/sharepoint-framework-overview)
+* [Office 365 developer tenant](https://learn.microsoft.com/sharepoint/dev/spfx/set-up-your-developer-tenant)
 
 
 
@@ -87,11 +93,9 @@ Use the Undo icon to undo the changes made to an item.
 
 > React, Redux Office-UI-Fabric
 
-## Solution
+## Contributors
 
-Solution|Author(s)
---------|---------
- react-spfx-multilist-grid | Russell Gove
+* [Russell Gove](https://github.com/russgove)
 
 ## Version history
 
@@ -107,6 +111,8 @@ Version|Date|Comments
   - `npm install`
   - `tsd install`
   - `gulp serve`
+
+>  This sample can also be opened with [VS Code Remote Development](https://code.visualstudio.com/docs/remote/remote-overview). Visit https://aka.ms/spfx-devcontainer for further instructions.
 
 > Include any additional steps as needed.
 
@@ -131,7 +137,7 @@ Usage:
 **THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
 
 
-<img src="https://telemetry.sharepointpnp.com/sp-dev-fx-webparts/samples/react-multilist-grid" />
+<img src="https://m365-visitor-stats.azurewebsites.net/sp-dev-fx-webparts/samples/react-multilist-grid" />
 
 
 

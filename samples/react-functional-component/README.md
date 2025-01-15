@@ -7,7 +7,12 @@ This web part is intended to be easier to understand for new developers building
 ![Screenshot](Screenshot.png "Screenshot - nothing to see here, move along")
 
 
-# Compatibility
+## Compatibility
+
+| :warning: Important          |
+|:---------------------------|
+| Every SPFx version is only compatible with specific version(s) of Node.js. In order to be able to build this sample, please ensure that the version of Node on your workstation matches one of the versions listed in this section. This sample will not work on a different version of Node.|
+|Refer to <https://aka.ms/spfx-matrix> for more information on SPFx compatibility.   |
 
 ![SPFx 1.8.2](https://img.shields.io/badge/SPFx-1.8.2-green.svg) 
 ![Node.js v10 | v8](https://img.shields.io/badge/Node.js-v10%20%7C%20v8-green.svg) 
@@ -16,21 +21,20 @@ This web part is intended to be easier to understand for new developers building
 ![Does not work with SharePoint 2016 (Feature Pack 2)](https://img.shields.io/badge/SharePoint%20Server%202016%20(Feature%20Pack%202)-Incompatible-red.svg "SharePoint Server 2016 Feature Pack 2 requires SPFx 1.1")
 ![Local Workbench Compatible](https://img.shields.io/badge/Local%20Workbench-Compatible-green.svg)
 ![Hosted Workbench Compatible](https://img.shields.io/badge/Hosted%20Workbench-Compatible-green.svg)
+![Compatible with Remote Containers](https://img.shields.io/badge/Remote%20Containers-Compatible-green.svg)
 
 ## Applies to
 
-* [SharePoint Framework](https://docs.microsoft.com/sharepoint/dev/spfx/sharepoint-framework-overview)
-* [Office 365 tenant](https://docs.microsoft.com/sharepoint/dev/spfx/set-up-your-development-environment)
+* [SharePoint Framework](https://learn.microsoft.com/sharepoint/dev/spfx/sharepoint-framework-overview)
+* [Microsoft 365 tenant](https://learn.microsoft.com/sharepoint/dev/spfx/set-up-your-development-environment)
 
 ## Prerequisites
 
 This sample was built with version 1.82 of the SharePoint Framework. It has been modified to use version 16.8 of the React framework (by default the version used is React 16.7). React 16.8 supports React Hooks although this is not needed in the sample code because HelloWorld.tsx is a pure (or stateless) functional component.
 
-## Solution
+## Contributors
 
-Solution|Author(s)
---------|---------
-react-functional-component | Bill Ayers
+* Bill Ayers
 
 ## Version history
 
@@ -48,6 +52,8 @@ Version|Date|Comments
   * `npm install`
   * `gulp serve`
 
+>  This sample can also be opened with [VS Code Remote Development](https://code.visualstudio.com/docs/remote/remote-overview). Visit https://aka.ms/spfx-devcontainer for further instructions.
+
 ## Features
 
 The purpose of this web part is to make it easier to understand for new developers building their first SPFx web part, when teaching the SharePoint Framework. The web part is a refactoring of the HelloWorld web part that is created by the **@microsoft/generator-sharepoint** Yeoman generator. The resulting rendered web part should look exactly the same, but the complexity of the code has been significantly reduced, and should be much easier to understand for a newcomer to the framework. 
@@ -58,7 +64,7 @@ It also introduces React Functional Components which offers a simpler way of bui
 * Functional Component
 * Adding State
 
-<img src="https://telemetry.sharepointpnp.com/sp-dev-fx-webparts/samples/react-functional-component" />
+<img src="https://m365-visitor-stats.azurewebsites.net/sp-dev-fx-webparts/samples/react-functional-component" />
 
 ## HelloWorldWebPart.ts Simplification
 
@@ -88,4 +94,4 @@ In the react-functional-component directory run `npm install` to resolve all the
 **THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
 
 
-<img src="https://telemetry.sharepointpnp.com/sp-dev-fx-webparts/samples/react-functional-component" />
+<img src="https://m365-visitor-stats.azurewebsites.net/sp-dev-fx-webparts/samples/react-functional-component" />

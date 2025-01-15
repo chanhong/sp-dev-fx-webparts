@@ -18,7 +18,7 @@ extensions:
 ## Summary
 SharePoint Framework web part which uses [Redux](http://redux.js.org/) to maintain a single state for the entire application and [ImmutableJS](https://facebook.github.io/immutable-js/) to create performant state trees.
 
-Redux AJAX actions are used together with the SharePoint REST API to display lists in your site. You can also add a new list to the site from this webpart.
+Redux AJAX actions are used together with the SharePoint REST API to display lists in your site. You can also add a new list to the site from this web part.
 
 More details in my post here: [Using Redux Async Actions and ImmutableJS in SharePoint Framework](http://www.vrdmn.com/2017/07/using-redux-async-actions-and.html)
 
@@ -27,6 +27,11 @@ More details in my post here: [Using Redux Async Actions and ImmutableJS in Shar
 
 ## Compatibility
 
+| :warning: Important          |
+|:---------------------------|
+| Every SPFx version is only compatible with specific version(s) of Node.js. In order to be able to build this sample, please ensure that the version of Node on your workstation matches one of the versions listed in this section. This sample will not work on a different version of Node.|
+|Refer to <https://aka.ms/spfx-matrix> for more information on SPFx compatibility.   |
+
 ![SPFx 1.1.0](https://img.shields.io/badge/SPFx-1.1.0-green.svg)
 ![Node.js v6](https://img.shields.io/badge/Node.js-v6-green.svg) 
 ![Compatible with SharePoint Online](https://img.shields.io/badge/SharePoint%20Online-Compatible-green.svg)
@@ -34,17 +39,16 @@ More details in my post here: [Using Redux Async Actions and ImmutableJS in Shar
 ![Compatible with SharePoint 2016 (Feature Pack 2)](https://img.shields.io/badge/SharePoint%20Server%202016%20(Feature%20Pack%202)-Compatible-green.svg)
 ![Local Workbench Compatible](https://img.shields.io/badge/Local%20Workbench-Compatible-green.svg)
 ![Hosted Workbench Compatible](https://img.shields.io/badge/Hosted%20Workbench-Compatible-green.svg)
+![Compatible with Remote Containers](https://img.shields.io/badge/Remote%20Containers-Compatible-green.svg)
 
 ## Applies to
 
-* [SharePoint Framework](https://docs.microsoft.com/sharepoint/dev/spfx/sharepoint-framework-overview)
-* [Office 365 tenant](https://docs.microsoft.com/sharepoint/dev/spfx/set-up-your-development-environment)
+* [SharePoint Framework](https://learn.microsoft.com/sharepoint/dev/spfx/sharepoint-framework-overview)
+* [Microsoft 365 tenant](https://learn.microsoft.com/sharepoint/dev/spfx/set-up-your-development-environment)
 
-## Solution
+## Contributors
 
-Solution|Author(s)
---------|---------
-React-Redux-RESTAPI | Vardhaman Deshpande [@vrdmn](https://twitter.com/vrdmn)
+* [Vardhaman Deshpande](https://github.com/vman)
 
 ## Version history
 
@@ -61,6 +65,8 @@ Version|Date|Comments
   - `gulp serve`
   - Open the SharePoint Online version of the workbench: /_layouts/15/workbench.aspx
 
+>  This sample can also be opened with [VS Code Remote Development](https://code.visualstudio.com/docs/remote/remote-overview). Visit https://aka.ms/spfx-devcontainer for further instructions.
+
 ## Why Redux and ImmutableJS
 Every [Redux](http://redux.js.org/) action creates a copy of the state, changes the required properties in the copy and then returns the copy as a new state. This prevents bugs where the state is changed unknowingly. 
 
@@ -74,4 +80,4 @@ Using ImmutableJS, we can create new state trees in memory without duplicating t
 **THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
 
 
-<img src="https://telemetry.sharepointpnp.com/sp-dev-fx-webparts/samples/react-redux-async-immutablejs" />
+<img src="https://m365-visitor-stats.azurewebsites.net/sp-dev-fx-webparts/samples/react-redux-async-immutablejs" />

@@ -25,8 +25,8 @@ Sub folders represent the different stages of the migration process. Each folder
 
 ## Applies to
 
-* [SharePoint Framework](https://docs.microsoft.com/sharepoint/dev/spfx/sharepoint-framework-overview)
-* [Microsoft 365 developer tenant](https://docs.microsoft.com/sharepoint/dev/spfx/set-up-your-developer-tenant)
+* [SharePoint Framework](https://learn.microsoft.com/sharepoint/dev/spfx/sharepoint-framework-overview)
+* [Microsoft 365 developer tenant](https://learn.microsoft.com/sharepoint/dev/spfx/set-up-your-developer-tenant)
 
 ## Solution
 
@@ -89,4 +89,4 @@ Once the npm packages are installed, run the command to preview your web parts i
 gulp serve --nobrowser
 ```
 
-<img src="https://telemetry.sharepointpnp.com/sp-dev-fx-webparts/tutorial-migrate-fullcalendar" />
+<img src="https://pnptelemetry.azurewebsites.net/sp-dev-fx-webparts/tutorial-migrate-fullcalendar" />

@@ -55,4 +55,4 @@ Version|Date|Comments
 1.0|May 2018|Initial release
 
 
-<img src="https://telemetry.sharepointpnp.com/sp-dev-fx-webparts/samples/react-banner" />
+<img src="https://m365-visitor-stats.azurewebsites.net/sp-dev-fx-webparts/samples/react-banner" />

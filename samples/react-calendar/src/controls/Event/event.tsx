@@ -4,7 +4,7 @@ import * as strings from 'CalendarWebPartStrings';
 import { IEventProps } from './IEventProps';
 import { IEventState } from './IEventState';
 import * as moment from 'moment';
-import { parseString } from 'xml2js';
+import { XMLParser } from "fast-xml-parser";
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { PeoplePicker, PrincipalType } from "@pnp/spfx-controls-react/lib/PeoplePicker";
 import {
@@ -123,6 +123,7 @@ export class Event extends React.Component<IEventProps, IEventState> {
     this.onSelectDateStart = this.onSelectDateStart.bind(this);
     this.onUpdateCoordinates = this.onUpdateCoordinates.bind(this);
     this.onGetErrorMessageTitle = this.onGetErrorMessageTitle.bind(this);
+    this.onChangeEventTitle = this.onChangeEventTitle.bind(this);
     this.getPeoplePickerItems = this.getPeoplePickerItems.bind(this);
     this.hidePanel = this.hidePanel.bind(this);
     this.onDelete = this.onDelete.bind(this);
@@ -410,10 +411,21 @@ export class Event extends React.Component<IEventProps, IEventState> {
     if (value.length === 0) {
       returnMessage = strings.EventTitleErrorMessage;
     } else {
-      this.setState({ eventData: { ...this.state.eventData, title: value }, disableButton: false, errorMessage: '' });
+      this.setState({ disableButton: false, errorMessage: '' });
     }
     return returnMessage;
   }
+
+  /**
+   *
+   * @private
+   * @memberof Event
+   */
+  private onChangeEventTitle(event: any) {
+    const eventTitle = event.target.value;
+    this.setState({ eventData: { ...this.state.eventData, title: eventTitle } });
+  }
+
   /**
    *
    * @private
@@ -804,45 +816,45 @@ export class Event extends React.Component<IEventProps, IEventState> {
    * @memberof Event 
    */
   private async returnExceptionRecurrenceInfo(recurrenceData: string) {
-    const promise = new Promise<object>((resolve, reject) => {
-      parseString(recurrenceData, (err, result) => {
-        if (err) {
-          reject(err);
-        }
+    const parser = new XMLParser();
+    try {
+      // Parse the XML string into a JSON object
+      const promise = parser.parse(recurrenceData);
 
-        resolve(result);
-      });
-    });
-
-    const recurrenceInfo: any = await promise;
-    if (recurrenceInfo != null) {
-      let keys = Object.keys(recurrenceInfo.recurrence.rule[0].repeat[0]);
-      const recurrenceTypes = ["daily", "weekly", "monthly", "monthlyByDay", "yearly", "yearlyByDay"];
-      for (var key of keys) {
-        const rule = recurrenceInfo.recurrence.rule[0].repeat[0][key][0]['$'];
-        switch (recurrenceTypes.indexOf(key)) {
-          case 0:
-            return this.parseDailyRule(rule);
-            break;
-          case 1:
-            return this.parseWeeklyRule(rule);
-            break;
-          case 2:
-            return this.parseMonthlyRule(rule);
-            break;
-          case 3:
-            return this.parseMonthlyByDayRule(rule);
-            break;
-          case 4:
-            return this.parseYearlyRule(rule);
-            break;
-          case 5:
-            return this.parseYearlyByDayRule(rule);
-            break;
-          default:
-            continue;
+      const recurrenceInfo: any = await promise;
+      if (recurrenceInfo != null) {
+        let keys = Object.keys(recurrenceInfo.recurrence.rule[0].repeat[0]);
+        const recurrenceTypes = ["daily", "weekly", "monthly", "monthlyByDay", "yearly", "yearlyByDay"];
+        for (var key of keys) {
+          const rule = recurrenceInfo.recurrence.rule[0].repeat[0][key][0]['$'];
+          switch (recurrenceTypes.indexOf(key)) {
+            case 0:
+              return this.parseDailyRule(rule);
+              break;
+            case 1:
+              return this.parseWeeklyRule(rule);
+              break;
+            case 2:
+              return this.parseMonthlyRule(rule);
+              break;
+            case 3:
+              return this.parseMonthlyByDayRule(rule);
+              break;
+            case 4:
+              return this.parseYearlyRule(rule);
+              break;
+            case 5:
+              return this.parseYearlyByDayRule(rule);
+              break;
+            default:
+              continue;
+          }
         }
       }
+
+    } catch (error) {
+      // Handle parsing errors by rejecting the promise
+      throw new Error(`Error parsing recurrence data: ${error.message}`);
     }
   }
 
@@ -907,11 +919,11 @@ export class Event extends React.Component<IEventProps, IEventState> {
                         allowDisabledFocus={true}
                         onClick={this.onEditRecurrence}
                         disabled={
-                        this.state.userPermissions.hasPermissionAdd ||
-                        this.state.userPermissions.hasPermissionEdit
-                          ? false
-                          : true
-                         }
+                          this.state.userPermissions.hasPermissionAdd ||
+                            this.state.userPermissions.hasPermissionEdit
+                            ? false
+                            : true
+                        }
                       >
                         {strings.editRecurrenceSeries}
                       </DefaultButton>
@@ -923,6 +935,7 @@ export class Event extends React.Component<IEventProps, IEventState> {
                   <TextField
                     label={strings.EventTitleLabel}
                     value={this.state.eventData ? this.state.eventData.title : ''}
+                    onChange={this.onChangeEventTitle}
                     onGetErrorMessage={this.onGetErrorMessageTitle}
                     deferredValidationTime={500}
                     disabled={this.state.userPermissions.hasPermissionAdd || this.state.userPermissions.hasPermissionEdit ? false : true}
@@ -1154,12 +1167,12 @@ export class Event extends React.Component<IEventProps, IEventState> {
                 <div>
                   <PeoplePicker
                     webAbsoluteUrl={this.props.siteUrl}
-                    context={this.props.context}
+                    context={this.props.context as any}
                     titleText={strings.AttendeesLabel}
                     principalTypes={[PrincipalType.User]}
                     resolveDelay={1000}
                     showtooltip={true}
-                    selectedItems={this.getPeoplePickerItems}
+                    //selectedItems={this.getPeoplePickerItems}
                     personSelectionLimit={10}
                     defaultSelectedUsers={this.state.selectedUsers}
                     disabled={this.state.userPermissions.hasPermissionAdd || this.state.userPermissions.hasPermissionEdit ? false : true}
@@ -1197,7 +1210,7 @@ export class Event extends React.Component<IEventProps, IEventState> {
                   styles: { main: { maxWidth: 450 } }
                 }}
               >
-                 <Label>{this.state.recurrenceSeriesEdited ? strings.ConfirmeDeleteAllRecurrrencesMessage : strings.ConfirmeDeleteOneRecurrenceMessage }</Label>
+                <Label>{this.state.recurrenceSeriesEdited ? strings.ConfirmeDeleteAllRecurrrencesMessage : strings.ConfirmeDeleteOneRecurrenceMessage}</Label>
                 {
                   this.state.isDeleting &&
                   <Spinner size={SpinnerSize.medium} ariaLabel={strings.SpinnerDeletingLabel} />

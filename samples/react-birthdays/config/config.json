@@ -2,19 +2,19 @@
   "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/config.2.0.schema.json",
   "version": "2.0",
   "bundles": {
-    "happy-birdthay-web-part": {
+    "happy-birthday-web-part": {
       "components": [
         {
-          "entrypoint": "./lib/webparts/Birthdays/BirthdaysWebPart.js",
-          "manifest": "./src/webparts/Birthdays/BirthdaysWebPart.manifest.json"
+          "entrypoint": "./lib/webparts/birthdays/BirthdaysWebPart.js",
+          "manifest": "./src/webparts/birthdays/BirthdaysWebPart.manifest.json"
         }
       ]
     }
   },
   "externals": {},
   "localizedResources": {
-    "ControlStrings": "lib/controls/HappyBirthdayCard/loc/{locale}.js",
-    "BirthdaysWebPartStrings": "lib/webparts/Birthdays/loc/{locale}.js",
-    "PropertyControlStrings": "node_modules/@pnp/spfx-property-controls/lib/loc/{locale}.js"
+    "BirthdaysWebPartStrings": "lib/webparts/birthdays/loc/{locale}.js",
+    "PropertyControlStrings": "node_modules/@pnp/spfx-property-controls/lib/loc/{locale}.js",
+    "ControlStrings": "lib/controls/HappyBirthdayCard/loc/{locale}.js"
   }
 }

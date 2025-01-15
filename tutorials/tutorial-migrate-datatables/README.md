@@ -13,7 +13,7 @@ Sub folders represent the different stages of the migration process. Each folder
 | 03-transformed-js-to-typescript | Transformed plain JavaScript to TypeScript | [details](https://docs.microsoft.com/sharepoint/dev/spfx/web-parts/guidance/migrate-jquery-datatables-script-to-spfx#transform-the-plain-javascript-code-to-typescript)
 
 
-# Compatibility
+## Compatibility
 
 ![SPFx 1.10](https://img.shields.io/badge/SPFx-1.10.0-green.svg) 
 ![Node.js v10 | v8](https://img.shields.io/badge/Node.js-v10%20%7C%20v8-green.svg) 
@@ -25,8 +25,8 @@ Sub folders represent the different stages of the migration process. Each folder
 
 ## Applies to
 
-* [SharePoint Framework](https://docs.microsoft.com/sharepoint/dev/spfx/sharepoint-framework-overview)
-* [Microsoft 365 developer tenant](https://docs.microsoft.com/sharepoint/dev/spfx/set-up-your-developer-tenant)
+* [SharePoint Framework](https://learn.microsoft.com/sharepoint/dev/spfx/sharepoint-framework-overview)
+* [Microsoft 365 developer tenant](https://learn.microsoft.com/sharepoint/dev/spfx/set-up-your-developer-tenant)
 
 ## Solution
 
@@ -89,4 +89,4 @@ gulp serve --nobrowser
 
 ----------
 
-<img src="https://telemetry.sharepointpnp.com/sp-dev-fx-webparts/tutorial-migrate-datatables" />
+<img src="https://pnptelemetry.azurewebsites.net/sp-dev-fx-webparts/tutorial-migrate-datatables" />

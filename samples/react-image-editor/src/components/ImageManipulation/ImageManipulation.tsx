@@ -59,11 +59,14 @@ export interface IImageManipulationProps {
   editMode?: (mode: boolean) => void;
   configSettings: IImageManipulationConfig;
   displayMode: DisplayMode;
+  altText: string;
 }
 
 export interface IImageManipulationState {
   settingPanel: SettingPanelType;
   redosettings: IImageManipulationSettings[];
+  lockAspectCrop: boolean;
+  lockAspectResize: boolean;
 }
 
 export class ImageManipulation extends React.Component<IImageManipulationProps, IImageManipulationState> {
@@ -81,7 +84,9 @@ export class ImageManipulation extends React.Component<IImageManipulationProps, 
 
     this.state = {
       settingPanel: SettingPanelType.Closed,
-      redosettings: []
+      redosettings: [],
+      lockAspectCrop: true,
+      lockAspectResize: true
     };
     this.openPanel = this.openPanel.bind(this);
     this.setRotate = this.setRotate.bind(this);
@@ -109,6 +114,7 @@ export class ImageManipulation extends React.Component<IImageManipulationProps, 
     this.img = new Image();
     this.img.src = url;
     this.img.crossOrigin = 'Anonymous';
+    this.img.alt = this.props.altText ? this.props.altText : 'Untitled image';
     this.img.onload = () => {
 
       this.applySettings();
@@ -305,7 +311,7 @@ export class ImageManipulation extends React.Component<IImageManipulationProps, 
           <canvas className={this.getMaxWidth()}
             style={{ display: 'none' }}
             ref={this.setManipulateRef}></canvas>
-          <canvas className={this.getMaxWidth()} ref={this.setCanvasRef} ></canvas>
+          <canvas className={this.getMaxWidth()} ref={this.setCanvasRef} aria-label={this.props.altText} role='img' >Your browser does not support displaying canvas elements.</canvas>
           {this.state.settingPanel === SettingPanelType.Crop && (this.getCropGrid())}
           {this.state.settingPanel === SettingPanelType.Resize && (this.getResizeGrid())}
 
@@ -315,37 +321,70 @@ export class ImageManipulation extends React.Component<IImageManipulationProps, 
   }
   private getCropGrid(): JSX.Element {
     const lastset: ICropSettings = this.getLastManipulation() as ICropSettings;
-    let lastdata: ICrop = { sx: 0, sy: 0, width: 0, height: 0 };
+    let lastdata: ICrop;
 
+    // Initialize crop data based on the current settings or default to aspect ratio
     if (lastset && lastset.type === ManipulationType.Crop) {
       lastdata = lastset;
+    } else {
+      const aspect = this.state.lockAspectCrop ? this.getAspect() : undefined;
+      lastdata = {
+        sx: 0,
+        sy: 0,
+        width: this.canvasRef ? this.canvasRef.width : 0,
+        height: this.state.lockAspectCrop && this.canvasRef && this.canvasRef.width && aspect
+          ? this.canvasRef.width / aspect
+          : this.canvasRef ? this.canvasRef.height : 0,
+      };
+      lastdata.aspect = aspect; // Set the aspect if the lock is enabled
     }
-    return (<ImageCrop
-      crop={lastdata}
-      showRuler
-      sourceHeight={this.img.height}
-      sourceWidth={this.img.width}
-      onChange={(crop) => {
-        this.setCrop(crop.sx, crop.sy, crop.width, crop.height, crop.aspect);
-      }
-      }
-    />);
+
+    console.log('Crop data passed to ImageCrop:', lastdata);
+
+    return (
+      <ImageCrop
+        crop={lastdata}
+        showRuler
+        sourceHeight={this.img.height}
+        sourceWidth={this.img.width}
+        onChange={(crop) => {
+          this.setCrop(crop.sx, crop.sy, crop.width, crop.height, crop.aspect);
+        }}
+      />
+    );
   }
 
   private getResizeGrid(): JSX.Element {
     const lastset: IResizeSettings = this.getLastManipulation() as IResizeSettings;
+    let lastdata: IResizeSettings;
+
+    // Initialize resize data based on the current settings or default to aspect ratio
     if (lastset && lastset.type === ManipulationType.Resize) {
-      return (<ImageGrid
-        width={lastset.width} height={lastset.height}
-        aspect={lastset.aspect}
-        onChange={(size) => this.setResize(size.width, size.height, lastset.aspect)}
-      />);
+      lastdata = lastset;
+    } else {
+      const aspect = this.state.lockAspectResize ? this.getAspect() : undefined;
+      lastdata = {
+        type: ManipulationType.Resize,
+        width: this.canvasRef ? this.canvasRef.width : 0,
+        height: this.state.lockAspectResize && this.canvasRef && this.canvasRef.width && aspect
+          ? this.canvasRef.width / aspect
+          : this.canvasRef ? this.canvasRef.height : 0,
+        aspect: aspect,
+      };
     }
-    return (<ImageGrid
-      onChange={(size) => this.setResize(size.width, size.height, undefined)}
-      // aspect={this.getAspect()}
-      width={this.canvasRef.width} height={this.canvasRef.height} />);
+
+    console.log('Resize data passed to ImageGrid:', lastdata);
+
+    return (
+      <ImageGrid
+        width={lastdata.width}
+        height={lastdata.height}
+        aspect={lastdata.aspect}
+        onChange={(size) => this.setResize(size.width, size.height, lastdata.aspect)}
+      />
+    );
   }
+
 
   private getMaxWidth(): string {
     const { settingPanel } = this.state;
@@ -600,17 +639,20 @@ export class ImageManipulation extends React.Component<IImageManipulationProps, 
     return (<div>
       <Checkbox
         label={strings.LockAspect}
-        checked={!isNaN(crop.aspect)}
-        onChange={() => {
-          if (isNaN(crop.aspect)) {
-            this.setCrop(undefined, undefined, undefined, undefined, this.getAspect());
-          } else {
-            this.setCrop(undefined, undefined, undefined, undefined, undefined);
-          }
-
+        checked={this.state.lockAspectCrop}
+        onChange={(e, checked) => {
+          // Toggle the lockAspect state when checkbox is checked/unchecked
+          this.setState({ lockAspectCrop: checked }, () => {
+            // Call the setCrop function with appropriate arguments based on the new state
+            if (this.state.lockAspectCrop) {
+              this.setCrop(undefined, undefined, undefined, undefined, this.getAspect());
+            } else {
+              this.setCrop(undefined, undefined, undefined, undefined, undefined);
+            }
+          });
         }}
-
       />
+
       <TextField
         label={strings.SourceX}
         value={'' + crop.sx}
@@ -640,13 +682,16 @@ export class ImageManipulation extends React.Component<IImageManipulationProps, 
 
       <Checkbox
         label={strings.LockAspect}
-        checked={!isNaN(resize.aspect)}
+        checked={this.state.lockAspectResize}
         onChange={() => {
-          if (isNaN(resize.aspect)) {
-            this.setResize(undefined, undefined, this.getAspect());
-          } else {
-            this.setResize(undefined, undefined, undefined);
-          }
+          this.setState({ lockAspectResize: !this.state.lockAspectResize }, () => {
+            if (isNaN(resize.aspect)) {
+              this.setResize(undefined, undefined, this.getAspect());
+            } else {
+              this.setResize(undefined, undefined, undefined);
+            }
+          })
+
 
         }}
 

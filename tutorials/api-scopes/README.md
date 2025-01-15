@@ -2,7 +2,7 @@
 
 ## Summary
 
-This sub-folder contains a client-side project that is related to the tutorial available at the following URL: https://docs.microsoft.com/en-us/sharepoint/dev/spfx/use-aad-tutorial
+This sub-folder contains a client-side project that is related to the tutorial available at the following URL: https://learn.microsoft.com/sharepoint/dev/spfx/use-aad-tutorial
 
 ![The UI of the sample application](./images/api-scopes.gif)
 
@@ -68,4 +68,4 @@ gulp serve
 **THIS CODE IS PROVIDED AS IS WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
 
 ----------
-<img src="https://telemetry.sharepointpnp.com/sp-dev-fx-webparts/tutorials" />
+<img src="https://pnptelemetry.azurewebsites.net/sp-dev-fx-webparts/tutorials" />

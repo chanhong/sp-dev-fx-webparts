@@ -1,17 +1,16 @@
-/* tslint:disable */
+
 require("./ReactAccordion.module.css");
 const styles = {
-  reactAccordion: 'reactAccordion_b579c085',
-  container: 'container_b579c085',
-  row: 'row_b579c085',
-  column: 'column_b579c085',
-  'ms-Grid': 'ms-Grid_b579c085',
-  title: 'title_b579c085',
-  subTitle: 'subTitle_b579c085',
-  description: 'description_b579c085',
-  button: 'button_b579c085',
-  label: 'label_b579c085'
+  reactAccordion: 'reactAccordion_aaf0cf49',
+  container: 'container_aaf0cf49',
+  row: 'row_aaf0cf49',
+  column: 'column_aaf0cf49',
+  'ms-Grid': 'ms-Grid_aaf0cf49',
+  title: 'title_aaf0cf49',
+  subTitle: 'subTitle_aaf0cf49',
+  description: 'description_aaf0cf49',
+  button: 'button_aaf0cf49',
+  label: 'label_aaf0cf49'
 };
 
 export default styles;
-/* tslint:enable */

@@ -6,8 +6,7 @@ import * as _ from 'lodash';
 import { useState, useEffect, useRef } from 'react';
 import { PageProperty } from '../models';
 
-import { sp } from "@pnp/sp";
-import { DateTimeFieldFormatType, DateTimeFieldFriendlyFormatType, FieldTypes, IField, IFieldInfo } from "@pnp/sp/fields/types";
+import { getSP } from '../utilities/pnpjs-config';
 import "@pnp/sp/webs";
 import "@pnp/sp/lists";
 import "@pnp/sp/fields";
@@ -28,23 +27,24 @@ const AdvancedPageProperties: React.FunctionComponent<IAdvancedPagePropertiesPro
 
   propsRef.current = props;
 
-  sp.setup({ spfxContext: props.context });
+  const _sp = getSP(propsRef.current.context);
 
   /**
    * refreshProperties
    * @description Gets the actual values for any selected properties, along with critical field metadata and ultimately re-sets the pagePropValues state
    */
   async function refreshProperties () {
-    var newSetOfValues: PageProperty[] = [];
+    const newSetOfValues: PageProperty[] = [];
 
     if (props.selectedProperties !== undefined && props.selectedProperties !== null) {
       Log.Write(`${props.selectedProperties.length.toString()} properties used.`);
 
       // Get the value(s) for the field from the list item itself
-      var allValues: any = {};
-      const siteAssetsList = await sp.web.lists.ensureSitePagesLibrary();
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      let allValues: any = {};
+      const sitePagesList = await _sp.web.lists.ensureSitePagesLibrary();
       if (props.context.pageContext.listItem !== undefined && props.context.pageContext.listItem !== null) {
-        allValues = await siteAssetsList.items.getById(props.context.pageContext.listItem.id).select(...props.selectedProperties).get();
+        allValues = await sitePagesList.items.getById(props.context.pageContext.listItem.id).select(...props.selectedProperties).fieldValuesAsText();
       }
 
       for (let i = 0; i < props.selectedProperties.length; i++) {
@@ -53,23 +53,27 @@ const AdvancedPageProperties: React.FunctionComponent<IAdvancedPagePropertiesPro
         Log.Write(`Selected Property: ${prop}`);
 
         // Get field information, in case anything is needed in conjunction with value types
-        const field = await siteAssetsList.fields.getByInternalNameOrTitle(prop)();
+        const field = await sitePagesList.fields.getByInternalNameOrTitle(prop)();
 
         // Establish the values array
-        var values: any[] = [];
-        if (allValues.hasOwnProperty(prop)) {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        let values: any[] = [];
+        // eslint-disable-next-line no-prototype-builtins
+        if (allValues.hasOwnProperty(field.InternalName)) {
           switch (field.TypeAsString) {
+            case "UserMulti":
             case "TaxonomyFieldTypeMulti":
+              values = _.clone(allValues[field.InternalName].split(";"));
+              break;
             case "MultiChoice":
-              values = _.clone(allValues[prop]);
+              values = _.clone(allValues[field.InternalName].split(","));
               break;
             case "Thumbnail":
-              values.push(JSON.parse(allValues[prop]));
+              values.push(JSON.parse(allValues[field.InternalName]));
               break;
-
             default:
               // Default behavior is to treat it like a string
-              values.push(allValues[prop]);
+              values.push(allValues[field.InternalName]);
               break;
           }
         }
@@ -100,7 +104,7 @@ const AdvancedPageProperties: React.FunctionComponent<IAdvancedPagePropertiesPro
    */
   const RenderPageProperties = () => {
     if (pagePropValues !== undefined && pagePropValues !== null) {
-      var retVal = _.map(pagePropValues, (prop) => {
+      const retVal = _.map(pagePropValues, (prop) => {
         return (
             <>
               <div className={styles.propNameRow}>{prop.info.Title}<span style={{display: 'none'}}> - {prop.info.TypeAsString}</span></div>
@@ -123,54 +127,33 @@ const AdvancedPageProperties: React.FunctionComponent<IAdvancedPagePropertiesPro
    * @returns
    */
    const RenderPagePropValue = (prop: PageProperty) => {
-    var retVal = _.map(prop.values, (val) => {
-      if (val !== null) {
+    const retVal = _.map(prop.values, (val) => {
+      if (val !== null && val !== "") {
         switch (prop.info.TypeAsString) {
           case "URL":
+            // eslint-disable-next-line no-case-declarations
+            const url_parts = val.split(",");
             return (
-              <span className={styles.urlValue}><a href={val.Url} target="_blank" style={{color: semanticColors.link}}>{val.Description}</a></span>
+              <span className={styles.urlValue}><a href={url_parts[0]} target="_blank" rel="noopener noreferrer" style={{color: semanticColors.link}}>{url_parts[1]}</a></span>
             );
           case "Thumbnail":
             return (
               <span><img className={styles.imgValue} src={val.serverRelativeUrl} /></span>
             );
           case "Number":
-            return (
-              <span className={styles.plainValue}>{(prop.info["ShowAsPercentage"] === true ? Number(val).toLocaleString(undefined,{style: 'percent', minimumFractionDigits:0}) : (prop.info["CommaSeparator"] === true ? val.toLocaleString('en') : val.toString()))}</span>
-            );
           case "Currency":
-            return (
-              <span className={styles.plainValue}>{(prop.info["CommaSeparator"] === true ? new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(val) : Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', useGrouping: false }).format(val))}</span>
-            );
           case "DateTime":
-            //,"",,
-            switch (prop.info["DateFormat"]) {
-              case "StandardUS":
-                return (
-                  <span className={styles.plainValue}>{new Date(val).toLocaleDateString()}</span>
-                );
-              case "ISO8601":
-                const d = new Date(val);
-                return (
-                  <span className={styles.plainValue}>{`${d.getFullYear().toString()}-${d.getMonth()}-${d.getDate()}`}</span>
-                );
-              case "DayOfWeek":
-                return (
-                  <span className={styles.plainValue}>{new Date(val).toLocaleDateString("en-US", { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</span>
-                );
-              case "MonthSpelled":
-                return (
-                  <span className={styles.plainValue}>{new Date(val).toLocaleDateString("en-US", { month: 'long', day: 'numeric', year: 'numeric' })}</span>
-                );
-              default:
-                return (
-                  <span className={styles.plainValue}>{new Date(val).toLocaleDateString()}</span>
-                );
-            }
+            return (
+              <span className={styles.plainValue}>{val}</span>
+            );
           case "TaxonomyFieldTypeMulti":
           case "TaxonomyFieldType":
             return (
-              <span className={styles.standardCapsule} style={{backgroundColor: semanticColors.accentButtonBackground, color: semanticColors.accentButtonText}}>{val.Label}</span>
+              <span className={styles.standardCapsule} style={{backgroundColor: semanticColors.accentButtonBackground, color: semanticColors.accentButtonText}}>{val}</span>
+            );
+          case "Note":
+            return (
+              <span className={styles.multiTextCapsule} style={{backgroundColor: semanticColors.accentButtonBackground, color: semanticColors.accentButtonText}}>{val}</span>
             );
           default:
             return (

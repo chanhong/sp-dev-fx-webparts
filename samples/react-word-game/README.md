@@ -6,7 +6,12 @@ A fun game where you unscramble the words before the time runs out. It stores ev
 ![Word Game Preview](./assets/preview.gif)
 
 
-# Compatibility
+## Compatibility
+
+| :warning: Important          |
+|:---------------------------|
+| Every SPFx version is only compatible with specific version(s) of Node.js. In order to be able to build this sample, please ensure that the version of Node on your workstation matches one of the versions listed in this section. This sample will not work on a different version of Node.|
+|Refer to <https://aka.ms/spfx-matrix> for more information on SPFx compatibility.   |
 
 ![SPFx 1.11](https://img.shields.io/badge/SPFx-1.11.0-green.svg) 
 ![Node.js v10](https://img.shields.io/badge/Node.js-v10-green.svg) 
@@ -15,23 +20,22 @@ A fun game where you unscramble the words before the time runs out. It stores ev
 ![Does not work with SharePoint 2016 (Feature Pack 2)](https://img.shields.io/badge/SharePoint%20Server%202016%20(Feature%20Pack%202)-Incompatible-red.svg "SharePoint Server 2016 Feature Pack 2 requires SPFx 1.1")
 ![Local Workbench Compatible](https://img.shields.io/badge/Local%20Workbench-Compatible-green.svg)
 ![Hosted Workbench Compatible](https://img.shields.io/badge/Hosted%20Workbench-Compatible-green.svg)
+![Compatible with Remote Containers](https://img.shields.io/badge/Remote%20Containers-Compatible-green.svg)
 
 ## Applies to
 
-* [SharePoint Framework](https://docs.microsoft.com/sharepoint/dev/spfx/sharepoint-framework-overview)
-* [Office 365 tenant](https://docs.microsoft.com/sharepoint/dev/spfx/set-up-your-development-environment)
+* [SharePoint Framework](https://learn.microsoft.com/sharepoint/dev/spfx/sharepoint-framework-overview)
+* [Microsoft 365 tenant](https://learn.microsoft.com/sharepoint/dev/spfx/set-up-your-development-environment)
 
 
 ## Prerequisites
 
 - SharePoint Online Tenant or SharePoint 2019 On Prem
 
-## Solution
+## Contributors
 
-Solution|Author(s)
---------|---------
-react-word-game | Neil Barkhina ([www.neilb.net](https://www.neilb.net/))
-react-word-game | Don Kirkham ([@DonKirkham](https://twitter.com/DonKirkham/))
+* [Neil Barkhina](https://github.com/nbarkhina)
+* [Don Kirkham](https://github.com/donkirkham)
 
 ## Version history
 
@@ -53,6 +57,8 @@ Version|Date|Comments
   * `gulp --ship`
   * `gulp package-solution --ship`
   * Upload the `.sppkg` file from the `sharepoint\solution` folder into your App Catalog
+
+>  This sample can also be opened with [VS Code Remote Development](https://code.visualstudio.com/docs/remote/remote-overview). Visit https://aka.ms/spfx-devcontainer for further instructions.
 
 ## Features
 
@@ -80,4 +86,4 @@ It also uses responsive design which works great on the SharePoint Mobile App:
 
 **THIS CODE IS PROVIDED *AS IS* WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING ANY IMPLIED WARRANTIES OF FITNESS FOR A PARTICULAR PURPOSE, MERCHANTABILITY, OR NON-INFRINGEMENT.**
 
-<img src="https://telemetry.sharepointpnp.com/sp-dev-fx-webparts/samples/react-word-game" />
+<img src="https://m365-visitor-stats.azurewebsites.net/sp-dev-fx-webparts/samples/react-word-game" />
